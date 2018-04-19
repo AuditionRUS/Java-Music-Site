@@ -1,9 +1,7 @@
 package com.example.test.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Good {
@@ -13,6 +11,8 @@ public class Good {
     private Integer id;
     private String name;
     private Integer price;
+    @OneToMany(fetch = FetchType.LAZY,mappedBy="good",cascade = CascadeType.ALL)
+    private Set<OrderLine> orderLine;
 
     public Good(){
 
@@ -41,5 +41,13 @@ public class Good {
 
     public void setPrice(Integer price) {
         this.price = price;
+    }
+
+    public Set<OrderLine> getOrderLine() {
+        return orderLine;
+    }
+
+    public void setOrderLine(Set<OrderLine> orderLine) {
+        this.orderLine = orderLine;
     }
 }

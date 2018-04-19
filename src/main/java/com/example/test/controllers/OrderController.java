@@ -21,7 +21,6 @@ public class OrderController {
 
     @PostMapping("/saveOrder")
     public String saveOrder(Order order){
-        System.out.println(order.getId());
         orderService.save(order);
         return "redirect:/";
     }

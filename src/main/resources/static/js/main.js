@@ -74,3 +74,12 @@ $('.delBtnOrder').on('click', function (event) {
 });
 
 });
+
+//Inner Форма длявывода OrderLine
+function createOrderLineForm() {
+    if(document.getElementById('innerBlock').style.visibility=="visible"){
+        document.getElementById('innerBlock').style.visibility="hidden";
+    }else {
+        document.getElementById('innerBlock').style.visibility = "visible";
+    }
+}

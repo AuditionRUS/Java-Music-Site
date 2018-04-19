@@ -3,6 +3,7 @@ package com.example.test.controllers;
 import com.example.test.repositories.GoodRepository;
 import com.example.test.repositories.OrderRepository;
 import com.example.test.services.GoodService;
+import com.example.test.services.OrderLineService;
 import com.example.test.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
@@ -24,15 +25,22 @@ public class MainController {
     @Autowired
     private OrderService orderService;
 
+    @Autowired
+    private OrderLineService orderLineService;
+
 
     @GetMapping("/")
     public String showPage(Model model, @RequestParam(defaultValue = "0") int pageGood,
-                           @RequestParam(defaultValue = "0")int pageOrder){
+                           @RequestParam(defaultValue = "0")int pageOrder,
+                           @RequestParam(defaultValue = "0")int pageOrderLine){
         model.addAttribute("dataGood", goodService.findAll(pageGood));
         model.addAttribute("currentPageGood", pageGood);
         
         model.addAttribute("dataOrder", orderService.findAll(pageOrder));
         model.addAttribute("currentPageOrder", pageOrder);
+
+        model.addAttribute("dataOrderLine", orderLineService.findAll(pageOrderLine));
+        model.addAttribute("currentPageOrderLine", pageOrderLine);
         return "index";
     }
 

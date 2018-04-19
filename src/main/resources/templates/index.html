@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <script type="text/javascript" src="webjars/jquery/3.1.0/jquery.min.js"></script>
     <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
+
     <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
     <link th:href="@{css/HelloPage.css}" href="../static/css/HelloPage.css" rel="stylesheet"/>
     <title>Title</title>
@@ -33,7 +33,7 @@
                     <div aria-labelledby="content-one" tabindex="0" aria-hidden="false" role="tabpanel" id="content-one">
 
                         <table class="table table-hover">
-                            <thread>
+                            <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Name</th>
@@ -41,10 +41,10 @@
                                     <th><button class="btn btn-success nBtn">New</button></th>
                                 </tr>
 
-                            </thread>
+                            </thead>
                             <tbody>
                             <tr th:each="good :${dataGood.content}">
-                                <td th:text="${good.id}"></td>
+                                <td th:text="${good.id}" onclick="createOrderLineForm();"></td>
                                 <td th:text="${good.name}"></td>
                                 <td th:text="${good.price}"></td>
                                 <td>
@@ -87,7 +87,7 @@
                     <div aria-labelledby="content-two" tabindex="0" aria-hidden="true" role="tabpanel" id="content-two">
 
                         <table class="table table-hover">
-                            <thread>
+                            <thead>
                                 <tr>
                                     <th>ID</th>
                                     <th>Client</th>
@@ -96,16 +96,16 @@
                                     <th><button class="btn btn-success nBtnOrder">New</button></th>
                                 </tr>
 
-                            </thread>
+                            </thead>
                             <tbody>
                             <tr th:each="order :${dataOrder.content}">
-                                <td th:text="${order.id}"></td>
+                                <td th:text="${order.idC}"></td>
                                 <td th:text="${order.client}"></td>
                                 <td th:text="${order.date}"></td>
                                 <td th:text="${order.address}"></td>
                                 <td>
-                                    <a th:href="@{deleteOrder/(id=${order.id})}" class="btn btn-danger delBtnOrder">Delete</a>
-                                    <a th:href="@{findOneOrder/(id=${order.id})}" class="btn btn-primary eBtnOrder">Edit</a>
+                                    <a th:href="@{deleteOrder/(id=${order.idC})}" class="btn btn-danger delBtnOrder">Delete</a>
+                                    <a th:href="@{findOneOrder/(id=${order.idC})}" class="btn btn-primary eBtnOrder">Edit</a>
 
                                 </td>
 
@@ -137,6 +137,28 @@
 
                 </div>
 
+                <div id="innerBlock" style="visibility: hidden; ">
+
+                    <table class="table table-hover">
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Price</th>
+                            <th><button class="btn btn-success nBtn">New</button></th>
+                        </tr>
+
+                        </thead>
+                        <tbody>
+                        <tr th:each="good :${dataGood.content}">
+                            <td th:utext="${good.orderLine}"></td>
+                        </tr>
+
+
+                        </tbody>
+                    </table>
+
+                </div>
 
 
             </div>
@@ -274,4 +296,5 @@
 
 </body>
 <script type="text/javascript"  th:src="@{js/HelloPage.js}" src="../static/js/HelloPage.js"></script>
+<script type="text/javascript" th:src="@{js/main.js}" src="../static/js/main.js"></script>
 </html>
