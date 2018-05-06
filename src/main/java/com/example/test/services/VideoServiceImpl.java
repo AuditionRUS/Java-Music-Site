@@ -7,9 +7,11 @@ import com.example.test.repositories.VideoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class VideoServiceImpl implements VideoService {
 
     int PAGE_SIZE = 5;

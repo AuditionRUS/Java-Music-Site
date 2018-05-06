@@ -5,9 +5,11 @@ import com.example.test.repositories.AudioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
+@Service
 public class AudioServiceImpl implements AudioService {
 
     int PAGE_SIZE = 5;

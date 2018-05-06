@@ -15,7 +15,7 @@ public class Audio {
     private String name;
     private String author;
     private String music; //Путь до файла в файловой системе
-    private Date dataAdd; //Дата добавления
+    private Date dateAdd; //Дата добавления
 
     public Integer getId() {
         return id;
@@ -50,10 +50,10 @@ public class Audio {
     }
 
     public Date getDataAdd() {
-        return dataAdd;
+        return dateAdd;
     }
 
-    public void setDataAdd(Date dataAdd) {
-        this.dataAdd = dataAdd;
+    public void setDataAdd(Date dateAdd) {
+        this.dateAdd = dateAdd;
     }
 }

@@ -43,13 +43,15 @@
 
                             </thead>
                             <tbody>
-                            <tr th:each="good :${dataGood.content}">
-                                <td th:text="${good.id}" onclick="createOrderLineForm();"></td>
-                                <td th:text="${good.name}"></td>
-                                <td th:text="${good.price}"></td>
+                            <tr th:each="audio :${dataAudio.content}">
+                                <td th:text="${audio.id}" onclick="createOrderLineForm();"></td>
+                                <td th:text="${audio.name}"></td>
+                                <td th:text="${audio.author}"></td>
+                                <td th:text="${audio.music}"></td>
+                                <td th:text="${audio.dateAdd}"></td>
                                 <td>
-                                    <a th:href="@{deleteGood/(id=${good.id})}" class="btn btn-danger delBtn">Delete</a>
-                                    <a th:href="@{findOneGood/(id=${good.id})}" class="btn btn-primary eBtn">Edit</a>
+                                    <a th:href="@{deleteAudio/(id=${good.id})}" class="btn btn-danger delBtn">Delete</a>
+                                    <a th:href="@{findOneAudio/(id=${good.id})}" class="btn btn-primary eBtn">Edit</a>
 
                                 </td>
 
@@ -62,14 +64,14 @@
 
                         <ul class="nav nav-pills">
                             <li>
-                                <a th:href="@{/(pageGood=0)}" th:text="First" class="nav-link"></a>
+                                <a th:href="@{/(pageAudio=0)}" th:text="First" class="nav-link"></a>
                             </li>
-                            <li class="nav-item" th:each="i : ${#numbers.sequence(0,dataGood.totalPages)}">
-                                <a th:href="@{/(pageGood=${i})}" th:text="${i}" class="nav-link"
-                                   th:classappend="${currentPageGood}==${i}?'active':''"></a>
+                            <li class="nav-item" th:each="i : ${#numbers.sequence(0,dataAudio.totalPages)}">
+                                <a th:href="@{/(pageAudio=${i})}" th:text="${i}" class="nav-link"
+                                   th:classappend="${currentPageAudio}==${i}?'active':''"></a>
                             </li>
                             <li>
-                                <a th:href="@{/(pageGood=${dataGood.totalPages})}" th:text="Last" class="nav-link"></a>
+                                <a th:href="@{/(pageAudio=${dataAudio.totalPages})}" th:text="Last" class="nav-link"></a>
                             </li>
                         </ul>
 
@@ -150,8 +152,8 @@
 
                         </thead>
                         <tbody>
-                        <tr th:each="good :${dataGood.content}">
-                            <td th:utext="${good.orderLine}"></td>
+                        <tr th:each="audio :${dataAudio.content}">
+                            <td th:utext="${audio.orderLine}"></td>
                         </tr>
 
 

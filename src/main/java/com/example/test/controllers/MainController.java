@@ -2,6 +2,7 @@ package com.example.test.controllers;
 
 import com.example.test.repositories.GoodRepository;
 import com.example.test.repositories.OrderRepository;
+import com.example.test.services.AudioService;
 import com.example.test.services.GoodService;
 import com.example.test.services.OrderLineService;
 import com.example.test.services.OrderService;
@@ -20,7 +21,7 @@ import java.util.Optional;
 public class MainController {
 
     @Autowired
-    private GoodService goodService;
+    private AudioService audioService;
 
     @Autowired
     private OrderService orderService;
@@ -30,11 +31,11 @@ public class MainController {
 
 
     @GetMapping("/")
-    public String showPage(Model model, @RequestParam(defaultValue = "0") int pageGood,
+    public String showPage(Model model, @RequestParam(defaultValue = "0") int pageAudio,
                            @RequestParam(defaultValue = "0")int pageOrder,
                            @RequestParam(defaultValue = "0")int pageOrderLine){
-        model.addAttribute("dataGood", goodService.findAll(pageGood));
-        model.addAttribute("currentPageGood", pageGood);
+        model.addAttribute("dataAudio", audioService.findAll(pageAudio));
+        model.addAttribute("currentPageAudio", pageAudio);
         
         model.addAttribute("dataOrder", orderService.findAll(pageOrder));
         model.addAttribute("currentPageOrder", pageOrder);
