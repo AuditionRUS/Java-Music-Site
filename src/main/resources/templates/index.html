@@ -6,7 +6,7 @@
     <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
     <link rel="stylesheet" href="webjars/bootstrap/4.0.0/css/bootstrap.min.css"/>
-    <link th:href="@{css/HelloPage.css}" href="../static/css/HelloPage.css" rel="stylesheet"/>
+    <link th:href="@{css/HelloPage.css}"  rel="stylesheet"/>
     <title>Title</title>
 </head>
 <body>
@@ -35,23 +35,21 @@
                         <table class="table table-hover">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
-                                    <th>Name</th>
-                                    <th>Price</th>
+                                    <th>Music</th>
+                                    <th>Music 2</th>
                                     <th><button class="btn btn-success nBtn">New</button></th>
                                 </tr>
 
                             </thead>
                             <tbody>
                             <tr th:each="audio :${dataAudio.content}">
-                                <td th:text="${audio.id}" onclick="createOrderLineForm();"></td>
-                                <td th:text="${audio.name}"></td>
-                                <td th:text="${audio.author}"></td>
                                 <td th:text="${audio.music}"></td>
-                                <td th:text="${audio.dateAdd}"></td>
+                                <td><audio controls src="${audio.music}"></audio></td>
+                                <td><audio controls th:src="@{../../calvin-harris-feat-dua-lipa-one-kiss.mp3}"></audio></td>
+                                <td><img th:src="@{cat.jpg}"></td>
                                 <td>
-                                    <a th:href="@{deleteAudio/(id=${good.id})}" class="btn btn-danger delBtn">Delete</a>
-                                    <a th:href="@{findOneAudio/(id=${good.id})}" class="btn btn-primary eBtn">Edit</a>
+                                    <a th:href="@{deleteAudio/(id=${audio.id})}" class="btn btn-danger delBtn">Delete</a>
+                                    <a th:href="@{findOneAudio/(id=${audio.id})}" class="btn btn-primary eBtn">Edit</a>
 
                                 </td>
 
@@ -139,28 +137,7 @@
 
                 </div>
 
-                <div id="innerBlock" style="visibility: hidden; ">
 
-                    <table class="table table-hover">
-                        <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Price</th>
-                            <th><button class="btn btn-success nBtn">New</button></th>
-                        </tr>
-
-                        </thead>
-                        <tbody>
-                        <tr th:each="audio :${dataAudio.content}">
-                            <td th:utext="${audio.orderLine}"></td>
-                        </tr>
-
-
-                        </tbody>
-                    </table>
-
-                </div>
 
 
             </div>

@@ -49,11 +49,11 @@ public class Audio {
         this.music = music;
     }
 
-    public Date getDataAdd() {
+    public Date getDateAdd() {
         return dateAdd;
     }
 
-    public void setDataAdd(Date dateAdd) {
+    public void setDateAdd(Date dateAdd) {
         this.dateAdd = dateAdd;
     }
 }
