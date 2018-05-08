@@ -1,5 +1,7 @@
 package com.example.test.entities;
 
+import org.springframework.beans.factory.annotation.Qualifier;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,7 +9,7 @@ import javax.persistence.Id;
 import java.sql.Date;
 
 @Entity
-public class Audio {
+public class Rock{
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -16,10 +18,6 @@ public class Audio {
     private String author;
     private String music; //Путь до файла в файловой системе
     private Date dateAdd; //Дата добавления
-
-    Audio(){
-
-    }
 
     public Integer getId() {
         return id;

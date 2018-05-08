@@ -19,19 +19,6 @@
 
                 <h1>Database</h1>
 
-                <ul role = "tablist" id="pixel-tabs">
-                    <li role = "presentation">
-                        <a tabindex="1" aria-controls="content-one" aria-selected="true" role="tab" href="#content-one" id="one-tab">Goods</a>
-                    </li>
-                    <li role = "presentation">
-                        <a tabindex="2" aria-controls="content-two" aria-selected="false" role="tab" href="#content-two" id="two-tab">Orders</a>
-                    </li>
-                </ul>
-
-                <div id="content-region" aria-live="polite" role="region">
-
-                    <div aria-labelledby="content-one" tabindex="0" aria-hidden="false" role="tabpanel" id="content-one">
-
                         <table class="table table-hover">
                             <thead>
                                 <tr>
@@ -43,10 +30,8 @@
                             </thead>
                             <tbody>
                             <tr th:each="audio :${dataAudio.content}">
-                                <td th:text="${audio.music}"></td>
-                                <td><audio controls src="${audio.music}"></audio></td>
-                                <td><audio controls th:src="@{../../calvin-harris-feat-dua-lipa-one-kiss.mp3}"></audio></td>
-                                <td><img th:src="@{cat.jpg}"></td>
+                                <td th:text="${audio.name}"></td>
+                                <td><audio controls src="audio/calvin-harris-feat-dua-lipa-one-kiss.mp3"></audio></td>
                                 <td>
                                     <a th:href="@{deleteAudio/(id=${audio.id})}" class="btn btn-danger delBtn">Delete</a>
                                     <a th:href="@{findOneAudio/(id=${audio.id})}" class="btn btn-primary eBtn">Edit</a>
@@ -73,7 +58,6 @@
                             </li>
                         </ul>
 
-                    </div>
 
 
 
@@ -84,52 +68,12 @@
 
 
 
-                    <div aria-labelledby="content-two" tabindex="0" aria-hidden="true" role="tabpanel" id="content-two">
-
-                        <table class="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Client</th>
-                                    <th>Date</th>
-                                    <th>Address</th>
-                                    <th><button class="btn btn-success nBtnOrder">New</button></th>
-                                </tr>
-
-                            </thead>
-                            <tbody>
-                            <tr th:each="order :${dataOrder.content}">
-                                <td th:text="${order.idC}"></td>
-                                <td th:text="${order.client}"></td>
-                                <td th:text="${order.date}"></td>
-                                <td th:text="${order.address}"></td>
-                                <td>
-                                    <a th:href="@{deleteOrder/(id=${order.idC})}" class="btn btn-danger delBtnOrder">Delete</a>
-                                    <a th:href="@{findOneOrder/(id=${order.idC})}" class="btn btn-primary eBtnOrder">Edit</a>
-
-                                </td>
-
-                            </tr>
 
 
-                            </tbody>
-                        </table>
-                        <hr/>
 
-                        <ul class="nav nav-pills">
-                            <li>
-                                <a th:href="@{/(pageOrder=0)}" th:text="First" class="nav-link"></a>
-                            </li>
-                            <li class="nav-item" th:each="i : ${#numbers.sequence(0,dataOrder.totalPages)}">
-                                <a th:href="@{/(pageOrder=${i})}" th:text="${i}" class="nav-link"
-                                   th:classappend="${currentPageOrder}==${i}?'active':''"></a>
-                            </li>
-                            <li>
-                                <a th:href="@{/(pageOrder=${dataOrder.totalPages})}" th:text="Last" class="nav-link"></a>
-                            </li>
-                        </ul>
 
-                    </div>
+
+
 
 
 
@@ -143,14 +87,14 @@
             </div>
         </div>
 
-        <div class="formSaveGood">
-            <form th:action="@{/saveGood}" method="post">
+        <div class="formSaveAudio">
+            <form th:action="@{/saveAudio}" method="post">
 
-            <div class="modal fade" id="exampleModalGood" tabindex="-1" role="dialog" aria-labelledby="exampleModalGoodLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModalAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalAudioLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalGoodLabel">Update or Create</h5>
+                            <h5 class="modal-title" id="exampleModalAudioLabel">Update or Create</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                             </button>
@@ -160,12 +104,20 @@
                                     <input type="hidden" class="form-control" id="id" name="id" value=""/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="name" class="form-control-label">Name:</label>
+                                    <label for="author" class="form-control-label">Author</label>
+                                    <input type="text" class="form-control" id="author" name="author" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="music" class="form-control-label">Music</label>
+                                    <input type="hidden" class="form-control" id="music" name="music" value="" />
+                                </div>
+                                <div class="form-group">
+                                    <label for="name" class="form-control-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name" value="" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="price" class="form-control-label">Price:</label>
-                                    <input type="text" class="form-control" id="price" name="price" value="" />
+                                    <label for="dateAdd" class="form-control-label">Date Add</label>
+                                    <input type="date" class="form-control" id="dateAdd" name="dateAdd" value="" />
                                 </div>
                         </div>
                         <div class="modal-footer">
@@ -181,11 +133,11 @@
         </div>
 
 
-        <div class="modal fade" id="modalDeleteGood" tabindex="-1" role="dialog" aria-labelledby="exampleModalGoodLongTitle" aria-hidden="true">
+        <div class="modal fade" id="modalDeleteAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalAudioLongTitle" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalGoodLongTitle">Modal title</h5>
+                        <h5 class="modal-title" id="exampleModalAudioLongTitle">Modal title</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -203,71 +155,7 @@
             </div>
         </div>
 
-        <div class="formSaveOrder">
-            <form th:action="@{/saveOrder}" method="post">
 
-                <div class="modal fade" id="exampleModalOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalOrderLabel">Update or Create</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <div class="form-group">
-                                    <input type="hidden" class="form-control" id="idOrder" name="id" value=""/>
-                                </div>
-                                <div class="form-group">
-                                    <label for="clientOrder" class="form-control-label">Client:</label>
-                                    <input type="text" class="form-control" id="clientOrder" name="client" value="" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="dateOrder" class="form-control-label">Date:</label>
-                                    <input type="date" class="form-control" id="dateOrder" name="date" value="" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="addressOrder" class="form-control-label">Address:</label>
-                                    <input type="text" class="form-control" id="addressOrder" name="address" value="" />
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" name="submitOrder" class="btn btn-primary" value="save" />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </form>
-
-        </div>
-
-
-        <div class="modal fade" id="modalDeleteOrder" tabindex="-1" role="dialog" aria-labelledby="exampleModalOrderLongTitle" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalOrderLongTitle">Modal title</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <p class="alert alert-danger">
-                            Are you sure you want to delete this order
-                        </p>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <a href="" class="btn btn-danger" id="delOrder">Delete</a>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div>
 
 
 
