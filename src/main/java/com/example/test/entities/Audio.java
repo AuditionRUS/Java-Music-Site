@@ -1,12 +1,11 @@
 package com.example.test.entities;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 
 @Entity
+@Table(name="audio")
 public class Audio {
 
     @Id
@@ -16,6 +15,9 @@ public class Audio {
     private String author;
     private String music; //Путь до файла в файловой системе
     private Date dateAdd; //Дата добавления
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="type_id")
+    private AudioType audioType;
 
     Audio(){
 
@@ -59,5 +61,13 @@ public class Audio {
 
     public void setDateAdd(Date dateAdd) {
         this.dateAdd = dateAdd;
+    }
+
+    public AudioType getAudioType() {
+        return audioType;
+    }
+
+    public void setAudioType(AudioType audioType) {
+        this.audioType = audioType;
     }
 }

@@ -5,7 +5,7 @@ import org.springframework.data.domain.Page;
 
 import java.util.Optional;
 
-public interface AudioService {
+public interface AudioService{
 
         Audio save(Audio audio);
 

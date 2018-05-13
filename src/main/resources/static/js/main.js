@@ -7,17 +7,24 @@ $(document).ready(function(){
         var href=$(this).attr('href');
         var text=$(this).text();
         if(text=='Edit'){
-            $.get(href,function (good,status) {
-                $('.formSaveGood #id').val(good.id);
-                $('.formSaveGood #name').val(good.name);
-                $('.formSaveGood #price').val(good.price);
+            $.get(href,function (audio,status) {
+                $('.formSaveAudio #id').val(audio.id);
+                $('.formSaveAudio #author').val(audio.author);
+                $('.formSaveAudio #music').val(audio.music);
+                $('.formSaveAudio #name').val(audio.name);
+                $('.formSaveAudio #dateAdd').val(audio.dateAdd);
+                $('.formSaveAudio #type').val(audio.type_id);
+
             });
-            $('.formSaveGood #exampleModalGood').modal();
+            $('.formSaveAudio #exampleModalAudio').modal();
         }else{
-            $('.formSaveGood #id').val('');
-            $('.formSaveGood #name').val('');
-            $('.formSaveGood #price').val('');
-            $('.formSaveGood #exampleModalGood').modal();
+            $('.formSaveAudio #id').val('');
+            $('.formSaveAudio #author').val('');
+            $('.formSaveAudio #music').val('');
+            $('.formSaveAudio #name').val('');
+            $('.formSaveAudio #dateAdd').val(d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate());
+            $('.formSaveAudio #type').val('');
+            $('.formSaveAudio #exampleModalAudio').modal();
         }
 
 
@@ -25,11 +32,11 @@ $(document).ready(function(){
 
     });
 
-    $('.delBtn').on('click', function (event) {
+    $('.table .delBtn').on('click', function (event) {
         event.preventDefault();
         var href=$(this).attr('href');
-        $('#modalDeleteGood #delRef').attr('href', href);
-        $('#modalDeleteGood').modal();
+        $('#modalDeleteAudio #delRef').attr('href', href);
+        $('#modalDeleteAudio').modal();
     });
 
 
@@ -75,7 +82,7 @@ $('.delBtnOrder').on('click', function (event) {
 
 });
 
-//Inner Форма длявывода OrderLine
+//Inner Форма для вывода OrderLine
 function createOrderLineForm() {
     if(document.getElementById('innerBlock').style.visibility=="visible"){
         document.getElementById('innerBlock').style.visibility="hidden";

@@ -32,6 +32,7 @@
                             <tr th:each="audio :${dataAudio.content}">
                                 <td th:text="${audio.name}"></td>
                                 <td><audio controls src="audio/calvin-harris-feat-dua-lipa-one-kiss.mp3"></audio></td>
+                                <td><a th:href="${audio.music}" download>aaa</a></td>
                                 <td>
                                     <a th:href="@{deleteAudio/(id=${audio.id})}" class="btn btn-danger delBtn">Delete</a>
                                     <a th:href="@{findOneAudio/(id=${audio.id})}" class="btn btn-primary eBtn">Edit</a>
@@ -104,21 +105,22 @@
                                     <input type="hidden" class="form-control" id="id" name="id" value=""/>
                                 </div>
                                 <div class="form-group">
-                                    <label for="author" class="form-control-label">Author</label>
-                                    <input type="text" class="form-control" id="author" name="author" value="" />
-                                </div>
-                                <div class="form-group">
-                                    <label for="music" class="form-control-label">Music</label>
-                                    <input type="hidden" class="form-control" id="music" name="music" value="" />
-                                </div>
-                                <div class="form-group">
                                     <label for="name" class="form-control-label">Name</label>
                                     <input type="text" class="form-control" id="name" name="name" value="" />
                                 </div>
                                 <div class="form-group">
-                                    <label for="dateAdd" class="form-control-label">Date Add</label>
-                                    <input type="date" class="form-control" id="dateAdd" name="dateAdd" value="" />
+                                    <label for="author" class="form-control-label">Author</label>
+                                    <input type="text" class="form-control" id="author" name="author" value="" />
                                 </div>
+                                <div class="form-group">
+                                    <select size="3">
+                                        <div th:each="audioType :${dataAudioType.content}">
+                                            <option th:text="${audioType.type}"></option>
+                                        </div>
+                                    </select>
+                                </div>
+                                <label for="musicFile" class="form-control-label">Type</label>
+                                <input type="file" class="form-control" id="musicFile" name="musicFile" accept="audio/*" />
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -144,7 +146,7 @@
                     </div>
                     <div class="modal-body">
                         <p class="alert alert-danger">
-                            Are you sure you want to delete this good
+                            Are you sure you want to delete?
                         </p>
                     </div>
                     <div class="modal-footer">
