@@ -6,6 +6,7 @@ $(document).ready(function(){
         event.preventDefault();
         var href=$(this).attr('href');
         var text=$(this).text();
+        var d = new Date();
         if(text=='Edit'){
             $.get(href,function (audio,status) {
                 $('.formSaveAudio #id').val(audio.id);

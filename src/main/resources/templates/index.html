@@ -31,8 +31,9 @@
                             <tbody>
                             <tr th:each="audio :${dataAudio.content}">
                                 <td th:text="${audio.name}"></td>
-                                <td><audio controls src="audio/calvin-harris-feat-dua-lipa-one-kiss.mp3"></audio></td>
-                                <td><a th:href="${audio.music}" download>aaa</a></td>
+                                <!--<td><audio controls src="audio/calvin-harris-feat-dua-lipa-one-kiss.mp3"></audio></td>-->
+                                <td><audio controls th:src="${audio.music}"></audio></td>
+                                <td><a th:href="${audio.music}" download>${audio.music}</a></td>
                                 <td>
                                     <a th:href="@{deleteAudio/(id=${audio.id})}" class="btn btn-danger delBtn">Delete</a>
                                     <a th:href="@{findOneAudio/(id=${audio.id})}" class="btn btn-primary eBtn">Edit</a>
@@ -89,7 +90,7 @@
         </div>
 
         <div class="formSaveAudio">
-            <form th:action="@{/saveAudio}" method="post">
+            <form th:action="@{/saveAudio}" method="post" enctype="multipart/form-data">
 
             <div class="modal fade" id="exampleModalAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalAudioLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
@@ -113,14 +114,20 @@
                                     <input type="text" class="form-control" id="author" name="author" value="" />
                                 </div>
                                 <div class="form-group">
-                                    <select size="3">
+                                    <select size="1">
                                         <div th:each="audioType :${dataAudioType.content}">
                                             <option th:text="${audioType.type}"></option>
                                         </div>
                                     </select>
                                 </div>
-                                <label for="musicFile" class="form-control-label">Type</label>
-                                <input type="file" class="form-control" id="musicFile" name="musicFile" accept="audio/*" />
+                                <div>
+                                    <label for="dateAdd" class="form-control-label">Date add</label>
+                                    <input type="text" class="form-control" id="dateAdd" name="dateAdd" value="" />
+                                </div>
+                                <div>
+                                    <label for="musicFile" class="form-control-label">Type</label>
+                                    <input type="file" class="form-control" id="musicFile" name="musicFile" accept="audio/*"/>
+                                </div>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
