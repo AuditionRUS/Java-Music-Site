@@ -35,4 +35,9 @@ public class MainController {
         return "index";
     }
 
+    @GetMapping("/login")
+    public String Login(){
+        return "login";
+    }
+
 }

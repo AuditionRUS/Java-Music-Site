@@ -15,13 +15,21 @@ public class User {
     @Column(name="password")
     private String password;
 
-    @Transient
-    private String confirmPassword;
-
-    @ManyToMany
-    @JoinTable(name="user_roles", joinColumns=@JoinColumn(name = "user_id"),
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinTable(name="user_role", joinColumns=@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles;
+
+    public User(){
+
+    }
+
+    public User(User user) {
+        this.id = user.getId();
+        this.username = user.getUsername();
+        this.password = user.getPassword();
+        this.roles = user.getRoles();
+    }
 
     public int getId() {
         return id;
@@ -47,14 +55,6 @@ public class User {
         this.password = password;
     }
 
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
-    }
-
     public Set<Role> getRoles() {
         return roles;
     }
@@ -62,4 +62,6 @@ public class User {
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
     }
+
+
 }

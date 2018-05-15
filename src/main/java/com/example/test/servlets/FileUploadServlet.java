@@ -1,12 +1,8 @@
 package com.example.test.servlets;
 
-import com.example.test.Config;
-import com.example.test.controllers.AudioController;
-import org.springframework.web.bind.annotation.PostMapping;
+import com.example.test.config.Config;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.MultipartConfig;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

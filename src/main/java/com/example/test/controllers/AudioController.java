@@ -1,9 +1,8 @@
 package com.example.test.controllers;
 
-import com.example.test.Config;
+import com.example.test.config.Config;
 import com.example.test.entities.Audio;
 import com.example.test.services.AudioService;
-import com.example.test.servlets.FileUploadServlet;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
 import java.util.Optional;
 
 @Controller

@@ -1,70 +1,26 @@
 package com.example.test.controllers;
 
-import com.example.test.entities.User;
-import com.example.test.services.authentification.SecurityService;
-import com.example.test.services.authentification.UserService;
-import com.example.test.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
+@RequestMapping("/rest/hello")
 @Controller
 public class UserController {
 
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    private SecurityService securityService;
-
-    @Autowired
-    private UserValidator userValidator;
-
-    @RequestMapping(value = "/registration", method = RequestMethod.GET)
-    public String registration(Model model){
-        model.addAttribute("userForm", new User());
-
-        return "registrarion";
+    @GetMapping("/all")
+    public String hello(){
+        return "Hello";
     }
 
-    @RequestMapping(value = "/registration", method = RequestMethod.POST)
-    public String registration(@ModelAttribute("userForm") User userForm,
-                               BindingResult bildingResult, Model model){
-        userValidator.validate(userForm, bildingResult);
-
-        if(bildingResult.hasErrors()){
-            return "registration";
-        }
-
-        userService.save(userForm);
-        securityService.autologin(userForm.getUsername(), userForm.getConfirmPassword());
-
-        return "redirect:/";
-    }
-
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String login(Model model, String error, String logout){
-        if(error!=null){
-            model.addAttribute("error","Username or password is incorrect");
-        }
-
-        if(logout!=null){
-            model.addAttribute("message","Logged out successfully");
-        }
-        return "login";
-    }
-
-    @RequestMapping(value = {"/","welcome"}, method = RequestMethod.GET)
-    public String welcome(Model model){
+    @PreAuthorize("hasAnyRole('ADMIN')")
+    @GetMapping("/secured/all")
+    public String securedHello(Model model) {
         return "welcome";
-    }
-
-    @RequestMapping(value = "/admin", method = RequestMethod.GET)
-    public String admin(Model model){
-        return "admin";
     }
 }
