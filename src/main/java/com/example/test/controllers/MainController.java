@@ -25,7 +25,8 @@ public class MainController {
     @GetMapping("/")
     public String showPage(Model model, @RequestParam(defaultValue = "0") int pageAudio,
                            @RequestParam(defaultValue = "0")int pageVideo,
-                            @RequestParam(defaultValue = "0")int pageAudioType){
+                            @RequestParam(defaultValue = "0")int pageAudioType,
+                           @RequestParam(defaultValue = "0")int pageUser){
         model.addAttribute("dataAudio", audioService.findAll(pageAudio));
         model.addAttribute("currentPageAudio", pageAudio);
         model.addAttribute("dataAudioType", audioTypeService.findAll(pageAudioType));
