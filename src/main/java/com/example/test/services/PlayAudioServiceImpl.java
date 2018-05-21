@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PlayAudioServiceImpl implements PlayAudioService{
+public class PlayAudioServiceImpl implements ServiceMain<PlayAudio>{
 
     int PAGE_SIZE = 5;
 

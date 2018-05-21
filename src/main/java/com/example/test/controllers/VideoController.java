@@ -1,9 +1,7 @@
 package com.example.test.controllers;
 
-import com.example.test.entities.Audio;
 import com.example.test.entities.Video;
-import com.example.test.services.AudioService;
-import com.example.test.services.VideoService;
+import com.example.test.services.ServiceMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +12,7 @@ import java.util.Optional;
 public class VideoController {
 
     @Autowired
-    private VideoService videoService;
+    private ServiceMain<Video> videoService;
 
     @PostMapping("/saveVideo")
     public String saveVideo(Video video){

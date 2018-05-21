@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class VideoServiceImpl implements VideoService {
+public class VideoServiceImpl implements ServiceMain<Video> {
 
     int PAGE_SIZE = 5;
 

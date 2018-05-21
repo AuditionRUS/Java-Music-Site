@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PlayListServiceImpl implements PlayListService {
+public class PlayListServiceImpl implements ServiceMain<PlayList> {
 
     int PAGE_SIZE = 5;
 

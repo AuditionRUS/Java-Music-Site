@@ -1,8 +1,9 @@
 package com.example.test.controllers;
 
-import com.example.test.services.AudioService;
-import com.example.test.services.AudioTypeService;
-import com.example.test.services.VideoService;
+import com.example.test.entities.Audio;
+import com.example.test.entities.AudioType;
+import com.example.test.entities.Video;
+import com.example.test.services.ServiceMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -13,13 +14,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class MainController {
 
     @Autowired
-    private AudioService audioService;
+    private ServiceMain<Audio> audioService;
 
     @Autowired
-    private VideoService videoService;
+    private ServiceMain<Video> videoService;
 
     @Autowired
-    private AudioTypeService audioTypeService;
+    private ServiceMain<AudioType> audioTypeService;
 
 
     @GetMapping("/")
@@ -32,7 +33,7 @@ public class MainController {
         model.addAttribute("dataAudioType", audioTypeService.findAll(pageAudioType));
         model.addAttribute("currentPageAudioType", pageAudioType);
 
-        return "index";
+        return "audio";
     }
 
     @GetMapping("/login")
