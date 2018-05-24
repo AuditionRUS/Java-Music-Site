@@ -44,7 +44,6 @@ public class AudioController extends HttpServlet {
                 System.out.println(file.toPath());
                 Files.copy(input, file.toPath());
             }catch (Exception e){
-                response.sendRedirect("/sendError"); //Сделать html
             }
             audio.setMusic("audio/"+fileName);
             audioService.save(audio);
