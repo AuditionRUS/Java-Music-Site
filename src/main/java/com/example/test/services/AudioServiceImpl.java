@@ -10,9 +10,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class AudioServiceImpl implements ServiceMain<Audio> {
+public class AudioServiceImpl implements ServiceAudio {
 
-    int PAGE_SIZE = 5;
+    int PAGE_SIZE = 10;
 
     @Autowired
     public AudioRepository audioRepository;
@@ -33,7 +33,11 @@ public class AudioServiceImpl implements ServiceMain<Audio> {
     }
 
     @Override
-    public Page<Audio> findAll(int pageAudio) {
-        return audioRepository.findAll(new PageRequest(pageAudio,PAGE_SIZE));
+    public Page<Audio> findAll(int pageAudio, String musicName) {
+        if (musicName != "" && musicName != null ){
+            return  audioRepository.findAllByName(musicName,new PageRequest(pageAudio, PAGE_SIZE));
+        } else {
+            return audioRepository.findAll(new PageRequest(pageAudio, PAGE_SIZE));
+        }
     }
 }

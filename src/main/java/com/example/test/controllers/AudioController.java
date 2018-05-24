@@ -2,6 +2,7 @@ package com.example.test.controllers;
 
 import com.example.test.config.Config;
 import com.example.test.entities.Audio;
+import com.example.test.services.ServiceAudio;
 import com.example.test.services.ServiceMain;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,7 +26,7 @@ import java.util.Optional;
 public class AudioController extends HttpServlet {
 
     @Autowired
-    private ServiceMain<Audio> audioService;
+    private ServiceAudio audioService;
 
     @RequestMapping(value = "/saveAudio", method = RequestMethod.POST)
     public String saveAudio(Audio audio, HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
