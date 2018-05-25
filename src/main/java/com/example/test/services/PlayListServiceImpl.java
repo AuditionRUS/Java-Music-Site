@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 @Service
-public class PlayListServiceImpl implements ServiceMain<PlayList> {
+public class PlayListServiceImpl implements ServicePlayList {
 
     int PAGE_SIZE = 5;
 
@@ -35,7 +35,11 @@ public class PlayListServiceImpl implements ServiceMain<PlayList> {
     }
 
     @Override
-    public Page<PlayList> findAll(int pagePlayList) {
-        return playListRepository.findAll(new PageRequest(pagePlayList,PAGE_SIZE));
+    public Page<PlayList> findAll(int pagePlayList, String playlistName) {
+        if (playlistName != "" && playlistName != null ){
+            return  playListRepository.findAllByName(playlistName,new PageRequest(pagePlayList, PAGE_SIZE));
+        } else {
+            return playListRepository.findAll(new PageRequest(pagePlayList, PAGE_SIZE));
+        }
     }
 }

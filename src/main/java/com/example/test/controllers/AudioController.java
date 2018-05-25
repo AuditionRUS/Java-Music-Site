@@ -46,6 +46,10 @@ public class AudioController extends HttpServlet {
             }catch (Exception e){
             }
             audio.setMusic("audio/"+fileName);
+
+            System.out.println(audio.getAudioType().getId());
+            System.out.println(audio.getAudioType().getType());
+
             audioService.save(audio);
         }
         return "redirect:/";

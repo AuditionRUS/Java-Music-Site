@@ -3,6 +3,7 @@ package com.example.test.entities;
 import javax.persistence.*;
 import java.sql.Date;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name="audio")
@@ -18,6 +19,8 @@ public class Audio {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="type_id")
     private AudioType audioType;
+    @OneToMany(mappedBy="audioId", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<PlayAudio> playAudio;
 
     Audio(){
 

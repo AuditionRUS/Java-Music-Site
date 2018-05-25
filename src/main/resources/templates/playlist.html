@@ -1,0 +1,399 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Музыкальный сайт</title>
+
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{bootstrap-3.0.0/dist/css/bootstrap.css}" rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link th:href="@{css/style.css}" rel="stylesheet">
+
+    <link th:href="@{css/font-awesome.css}" rel="stylesheet">
+    <link th:href="@{js/swiperjs/idangerous.swiper.css}" rel="stylesheet">
+    <link th:href="@{js/big-video/css/bigvideo.css}" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script th:src="@{bootstrap-3.0.0/assets/js/html5shiv.js}"></script>
+    <script th:src="@{bootstrap-3.0.0/assets/js/respond.min.js}"></script>
+    <script type="text/javascript" src="webjars/jquery/3.1.0/jquery.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+
+<!-- BEGIN banner area -->
+
+<div class="top-banner-area">
+    <a href="#"><img src="images/logo.png" alt="Logo"></a>
+
+</div>
+
+<!-- END banner area -->
+
+<div class="content-wrap">
+    <div class="main-container">
+        <header>
+            <nav style="width: 100%;">
+                <ul>
+                    <li style="margin-left:20px;" class="current-item">
+                        <a href="index.html">Главная</a>
+                    </li>
+                    <li>
+                        <a href="contact.html">Контакты</a>
+                    </li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- BEGIN mobile nav -->
+
+        <select class="bb-mobile-nav">
+            <option>Главная</option>
+            <option>Контакты</option>
+        </select>
+
+        <!-- END mobile nav -->
+
+        <span class="clear"></span>
+
+        <!-- BEGIN page content -->
+
+        <div class="row">
+
+            <!-- BEGIN content -->
+
+            <div class="col-md-8">
+
+                <content>
+
+                    <div class="audio-tracks-wrap audio-page" style="width: 100%;">
+
+                        <form method="get" style="">
+                            <input type="submit" value="Поиск" name="search" style="height: 40px;">
+                            <input type="text" name="playlistName" style="width:70%;display: inline-block">
+                        </form>
+
+                        <button class="btnPlayList btn-primary btn-block" type="submit" style="margin-top: 20px;">Добавить плейлист</button>
+
+                        <br>
+
+                        <div th:each="playlist :${playList.content}">
+                                <div class="details" style="width: 200%;" th:if="${playlist.user_id.getId()} == ${#httpServletRequest.userPrincipal.Principal.getId()}">
+                                    <h4 th:text="${playlist.name}"></h4>
+                                </div>
+                        </div>
+                    </div>
+
+                    <ul class="bluebox-pagination" style="margin-top:40px;">
+                        <li>
+                            <a th:href="@{/(pagePlayList=0)}" th:text="First" class="nav-link"></a>
+                        </li>
+                        <li class="nav-item" th:each="i : ${#numbers.sequence(0,playList.totalPages-1)}" th:if="${playList.totalPages-1}!=-1">
+                            <a th:href="@{/(pagePlayList=${i})}" th:text="${i}" class="nav-link"
+                               th:classappend="${currentPagePlayList}==${i}?'active':''"></a>
+                        </li>
+                        <li>
+                            <a th:href="@{/(pagePlayList=${playList.totalPages-1})}" th:text="Last" class="nav-link"></a>
+                        </li>
+                    </ul>
+                    <span class="clear"></span>
+
+                </content>
+            </div>
+
+            <!-- END content -->
+
+            <!-- BEGIN sidebar -->
+
+            <div class="col-md-4">
+
+                <aside>
+
+                    <!-- BEGIN events -->
+
+                    <div class="bluebox-heading">
+                        <h3>Авторизация</h3>
+                    </div>
+                    <div class="events-list widget-wrap">
+
+                        <section class="event">
+                            <div class="date">
+                                <strong></strong>
+                                <span class="month"></span>
+                                <span class="details"></span>
+                            </div>
+                            <div class="details" th:if="${#httpServletRequest.remoteUser} != null">
+                                <h3>Привет, [[${#httpServletRequest.remoteUser}]]</h3>
+                                <button class="nAudioBtn btn btn-primary btn-block" type="submit">Добавить песню</button>
+                                <a class="btn btn-primary btn-block" href="/playlist">Мой Плейлист</a>
+                            </div>
+                            <div class="details" th:if="${#httpServletRequest.remoteUser} == null">
+                                <form method="post" class="form-signin" action="/">
+                                    <input class="form-control" name="username" type="text" placeholder="Username">
+                                    <input class="form-control" name="password" type="password" placeholder="Password">
+                                    <button class="btn btn-primary btn-block" type="submit" style="margin-top: 20px;">Вход</button>
+                                    <h4 class="text-center"><button class="btn btn-success nBtn">Регистрация</button></h4>
+                                </form>
+                            </div>
+                        </section>
+
+
+                    </div>
+
+
+                </aside>
+            </div>
+
+
+        </div>
+        <span class="clear"></span>
+
+        <!-- END page content -->
+
+    </div>
+
+
+    <!-- BEGIN footer -->
+
+    <footer>
+
+        <div class="row">
+
+            <div class="col-md-4">
+                <div class="bluebox-heading">
+                    <h3>О нашем сайте</h3>
+                </div>
+                Равным образом консультация с широким активом в значительной степени обуславливает создание форм развития. Разнообразный и богатый опыт постоянное информационно-пропагандистское обеспечение нашей деятельности требуют определения и уточнения модели развития.
+                <span class="clear"></span>
+            </div>
+
+            <div class="col-md-4">
+                <div class="bluebox-heading">
+                    <h3>Полезное</h3>
+                </div>
+                <ul class="news-list">
+                    <li>
+                        <h4><a href="#">Новый шаблон доступент для скачивания</a></h4>
+                        <span>31 августа 2015 | Джон Доу</span>
+                    </li>
+                    <li>
+                        <h4><a href="#">Адаптивный дизайн</a></h4>
+                        <span>31 августа 2015 | Джон Доу</span>
+                    </li>
+                    <li>
+                        <h4><a href="#">Проектирование шаблона</a></h4>
+                        <span>31 августа 2015 | Джон Доу</span>
+                    </li>
+                </ul>
+                <span class="clear"></span>
+            </div>
+
+            <div class="col-md-4">
+                <div class="bluebox-heading">
+                    <h3>Нас можно найти</h3>
+                </div>
+                <div class="social-widget">
+                    <ul>
+                        <li>
+                            <a href="#">
+                                <span><i class="icon-facebook"></i></span>
+                                <span><i class="icon-facebook"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span><i class="icon-dribbble"></i></span>
+                                <span><i class="icon-dribbble"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span><i class="icon-instagram"></i></span>
+                                <span><i class="icon-instagram"></i></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#">
+                                <span><i class="icon-twitter"></i></span>
+                                <span><i class="icon-twitter"></i></span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <span class="clear"></span>
+            </div>
+        </div>
+    </footer>
+
+    <!-- END footer -->
+
+    <div class="copyrights-content">
+        <span style="color:#fff;">Music site</span>
+    </div>
+</div>
+<div class="footer-logo">
+</div>
+
+<!-- FORM -->
+
+<!-- Форма добавления user-->
+
+<div class="formRegistration">
+    <form th:action="@{/reg}" method="post">
+
+        <div class="modal fade" id="exampleModalReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalRegLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalRegLabel">Registration</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="id" name="id" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="username" class="form-control-label">Имя пользователя</label>
+                            <input type="text" class="form-control" id="username" name="username" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="password" class="form-control-label">Пароль</label>
+                            <input type="password" class="form-control" id="password" name="password" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="role_id" name="role" value="" />
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="role" name="role" value="USER" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" name="submitGood" class="btn btn-primary" value="save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Форма добавления audio-->
+
+<div class="formSaveAudio">
+    <form th:action="@{/saveAudio}" method="post" enctype="multipart/form-data">
+
+        <div class="modal fade" id="exampleModalAudio" tabindex="-1" role="dialog" aria-labelledby="exampleModalAudioLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalAudioLabel">Update or Create</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="idAudio" name="idAudio" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="name" class="form-control-label">Name</label>
+                            <input type="text" class="form-control" id="name" name="name" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="author" name="author" th:value="${#httpServletRequest.remoteUser}" />
+                        </div>
+                        <div class="form-group">
+                            <select size="1" name="audioType" id="type_id">
+                                <div th:each="audioType :${dataAudioType.content}">
+                                    <option th:text="${audioType.type}" th:value="${audioType.id}"></option>
+                                </div>
+                            </select>
+                        </div>
+                        <div>
+                            <input type="hidden" class="form-control" id="dateAdd" name="dateAdd" value="" />
+                        </div>
+                        <div>
+                            <label for="musicFile" class="form-control-label">Type</label>
+                            <input type="file" class="form-control" id="musicFile" name="musicFile" accept="audio/*" required/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" name="submitGood" class="btn btn-primary" value="save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- Форма добавления playlist -->
+
+<div class="formSavePlayList">
+    <form th:action="@{/playlistSave}" method="post">
+
+        <div class="modal fade" id="exampleModalPlayList" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlayListLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalPlayListLabel">Update or Create</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="idPlayList" name="idAudio" value=""/>
+                        </div>
+                        <div class="form-group">
+                            <label for="namePlayList" class="form-control-label">Name</label>
+                            <input type="text" class="form-control" id="namePlayList" name="name" value="" required/>
+                        </div>
+                        <div class="form-group">
+                            <label for="datePlayList" class="form-control-label">Date</label>
+                            <input type="text" class="form-control" id="datePlayList" name="dateAdd"/>
+                        </div>
+                        <div class="form-group">
+                            <input type="hidden" class="form-control" id="userPlayList" name="user_id" th:value="${#httpServletRequest.userPrincipal.Principal.getId()}" required/>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <input type="submit" name="submitPlayList" class="btn btn-primary" value="save" />
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script th:src="@{bootstrap-3.0.0/assets/js/jquery.js}"></script>
+<script th:src="@{bootstrap-3.0.0/dist/js/bootstrap.min.js}"></script>
+<script th:src="@{js/mainAudio.js}"></script>
+
+<script type="text/javascript" th:src="@{js/custom.js}"></script>
+<script type="text/javascript" th:src="@{js/jplayer/jquery.jplayer.min.js}"></script>
+
+</html>

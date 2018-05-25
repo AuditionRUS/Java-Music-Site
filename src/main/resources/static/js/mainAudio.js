@@ -25,13 +25,6 @@ $(document).ready(function(){
 
     });
 
-    $('.table .delBtn').on('click', function (event) {
-        event.preventDefault();
-        var href=$(this).attr('href');
-        $('#modalDeleteReg #delRef').attr('href', href);
-        $('#modalDeleteReg').modal();
-    });
-
 
     //For Audio
 
@@ -48,7 +41,7 @@ $(document).ready(function(){
                 $('.formSaveAudio #music').val(audio.music);
                 $('.formSaveAudio #name').val(audio.name);
                 $('.formSaveAudio #dateAdd').val(audio.dateAdd);
-                $('.formSaveAudio #type').val(audio.type_id);
+                $('.formSaveAudio #type_id').val(audio.type_id);
 
             });
             $('.formSaveAudio #exampleModalAudio').modal();
@@ -56,8 +49,36 @@ $(document).ready(function(){
             $('.formSaveAudio #idAudio').val('');
             $('.formSaveAudio #name').val('');
             $('.formSaveAudio #dateAdd').val(d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate());
-            $('.formSaveAudio #type').val('');
+            $('.formSaveAudio #type_id').val('');
             $('.formSaveAudio #exampleModalAudio').modal();
+        }
+
+
+
+
+    });
+
+    //For PlayList
+
+
+    $('.btnPlayList').on('click',function (event) {
+        event.preventDefault();
+        var href=$(this).attr('href');
+        var text=$(this).text();
+        var d = new Date();
+        if(text=='Edit'){
+            $.get(href,function (playlist,status) {
+                $('.formSavePlayList #idPlayList').val(playlist.id);
+                $('.formSavePlayList #namePlayList').val(playlist.name);
+                $('.formSavePlayList #datePlayList').val(playlist.dateAdd);
+                $('.formSavePlayList #userPlayList').val(playlist.user_id);
+            });
+            $('.formSavePlayList #exampleModalPlayList').modal();
+        }else{
+            $('.formSavePlayList #idPlayList').val('');
+            $('.formSavePlayList #namePlayList').val('');
+            $('.formSavePlayList #datePlayList').val(d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate());
+            $('.formSavePlayList #exampleModalPlayList').modal();
         }
 
 
@@ -68,8 +89,8 @@ $(document).ready(function(){
     $('.table .delBtn').on('click', function (event) {
         event.preventDefault();
         var href=$(this).attr('href');
-        $('#modalDeleteAudio #delRef').attr('href', href);
-        $('#modalDeleteAudio').modal();
+        $('#modalDeleteReg #delRef').attr('href', href);
+        $('#modalDeleteReg').modal();
     });
 
 
