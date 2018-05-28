@@ -35,11 +35,16 @@ public class PlayListServiceImpl implements ServicePlayList {
     }
 
     @Override
-    public Page<PlayList> findAll(int pagePlayList, String playlistName) {
+    public Page<PlayList> findAll(int playlistShow, int pagePlayList, String playlistName) {
         if (playlistName != "" && playlistName != null ){
-            return  playListRepository.findAllByName(playlistName,new PageRequest(pagePlayList, PAGE_SIZE));
+            System.out.println("hello");
+            System.out.println(playlistShow);
+            System.out.println(playlistName);
+            return  playListRepository.findAllByName(playlistShow, playlistName,new PageRequest(pagePlayList, PAGE_SIZE));
         } else {
-            return playListRepository.findAll(new PageRequest(pagePlayList, PAGE_SIZE));
+            System.out.println(playlistShow);
+            System.out.println(playlistName);
+            return playListRepository.findAllByName(playlistShow, new PageRequest(pagePlayList, PAGE_SIZE));
         }
     }
 }

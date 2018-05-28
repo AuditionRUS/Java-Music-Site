@@ -13,5 +13,6 @@ public interface ServicePlayList {
 
     Optional<PlayList> findById(int id);
 
-    Page<PlayList> findAll(int pagePlayList, String playlistName);
+    Page<PlayList> findAll(int playlistShow,int pagePlayList, String playlistName);
+
 }

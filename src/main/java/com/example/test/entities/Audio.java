@@ -11,6 +11,7 @@ public class Audio {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name ="id")
     private Integer id;
     private String name;
     private String author;

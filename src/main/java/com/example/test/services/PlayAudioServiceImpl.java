@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.Optional;
 
 @Service
@@ -21,7 +22,12 @@ public class PlayAudioServiceImpl implements ServiceMain<PlayAudio>{
 
     @Override
     public PlayAudio save(PlayAudio playAudio) {
-        return playAudioRepository.save(playAudio);
+        try{
+            return playAudioRepository.save(playAudio);
+        }catch (Exception e){
+            return null;
+        }
+
     }
 
     @Override

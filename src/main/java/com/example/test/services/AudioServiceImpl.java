@@ -40,4 +40,13 @@ public class AudioServiceImpl implements ServiceAudio {
             return audioRepository.findAll(new PageRequest(pageAudio, PAGE_SIZE));
         }
     }
+
+    @Override
+    public Page<Audio> findAllByPlayAudio(int playlistGoal, int pagePlayListAudio, String playListName) {
+        if(playListName != "" && playListName != null){
+            return audioRepository.findAllByPlayAudio(playListName, playlistGoal, new PageRequest(pagePlayListAudio, PAGE_SIZE));
+        }else {
+            return audioRepository.findAllByPlayAudio(playlistGoal, new PageRequest(pagePlayListAudio, PAGE_SIZE));
+        }
+    }
 }

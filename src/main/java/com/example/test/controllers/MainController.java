@@ -9,10 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.validation.Valid;
 
 @Controller
 public class MainController {
@@ -35,16 +41,30 @@ public class MainController {
     @Autowired
     private ServiceMain<PlayAudio> playAudioServiceMain;
 
+    @Autowired
+    private UserRepository userRep;
+
 
     @GetMapping("/")
     public String showPage(Model model, @RequestParam(defaultValue = "0") int pageAudio,
                            @RequestParam(defaultValue = "0")int pageVideo,
                             @RequestParam(defaultValue = "0")int pageAudioType,
-                           @RequestParam(defaultValue = "0")int pageUser, String musicName){
+                           @RequestParam(defaultValue = "0")int pageUser,
+                           @RequestParam(defaultValue = "0")int pagePlayList,
+                           String musicName, String playlistName,
+                           HttpServletRequest req){
         model.addAttribute("dataAudio", audioService.findAll(pageAudio, musicName));
         model.addAttribute("currentPageAudio", pageAudio);
         model.addAttribute("dataAudioType", audioTypeService.findAll(pageAudioType));
         model.addAttribute("currentPageAudioType", pageAudioType);
+        int plList;
+        if (req.getUserPrincipal()==null){
+             plList = -1;
+        }else{
+            plList = userRep.findAllByUsername(req.getUserPrincipal().getName()).getId();
+        }
+        model.addAttribute("playList", playListServiceMain.findAll(plList, pagePlayList, playlistName));
+        model.addAttribute("currentPagePlayList", pagePlayList);
         return "audio";
     }
 
@@ -52,8 +72,9 @@ public class MainController {
     @GetMapping("/playlist")
     public String showplaylist(Model model, @RequestParam(defaultValue = "0")int pagePlayList,
                                @RequestParam(defaultValue = "0")int pageAudioType,
-                               @RequestParam(defaultValue = "0")int pageUser, String playlistName ){
-        model.addAttribute("playList", playListServiceMain.findAll(pagePlayList, playlistName));
+                               @RequestParam(defaultValue = "0")int pageUser, String playlistName,
+                               HttpServletRequest req){
+        model.addAttribute("playList", playListServiceMain.findAll(userRep.findAllByUsername(req.getUserPrincipal().getName()).getId(), pagePlayList, playlistName));
         model.addAttribute("currentPagePlayList", pagePlayList);
         model.addAttribute("dataUser", userRepository.findAll(new PageRequest(pageUser,10)));
         model.addAttribute("currentPageUser", pageUser);
@@ -74,11 +95,28 @@ public class MainController {
 
     @PreAuthorize("hasAnyRole('ADMIN','USER')")
     @PostMapping("/playListAudioSave")
-    public String saveAudioToPlaylist(PlayAudio playAudio){
-        System.out.println(playAudio);
-        System.out.println(playAudio);
+    public String saveAudioToPlaylist(@Valid PlayAudio playAudio, BindingResult bindingResult,
+                                      Model model){
+        System.out.println(playAudio.getAudioId());
+        System.out.println(playAudio.getPlayListId());
         playAudioServiceMain.save(playAudio);
         return "redirect:/";
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping("/playlistAudio")
+    public String playlistAudio(Model model, @RequestParam(defaultValue = "0")int pagePlayListAudio,
+                                @RequestParam(defaultValue = "0")int pageAudioType,
+                                @RequestParam(defaultValue = "0")int pageUser,
+                                String playListName, int playListGoal){
+        model.addAttribute("dataAudioPlayList", audioService.findAllByPlayAudio(playListGoal, pagePlayListAudio, playListName));
+        model.addAttribute("currentPagePlayList", pagePlayListAudio);
+        model.addAttribute("dataUser", userRepository.findAll(new PageRequest(pageUser,10)));
+        model.addAttribute("currentPageUser", pageUser);
+        model.addAttribute("dataAudioType", audioTypeService.findAll(pageAudioType));
+        model.addAttribute("currentPageAudioType", pageAudioType);
+        model.addAttribute("playListGoal",playListGoal);
+        return "playlistAudio";
     }
 
 }

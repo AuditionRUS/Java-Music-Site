@@ -86,28 +86,35 @@
 
                         <br>
 
-                        <div th:each="playlist :${playList.content}" style="text-align: center; margin-left: -10px;">
-                            <form method="get" th:action="@{/playlistAudio}">
-                                <button class="btn btn-primary" style="width: 200%;"
-                                     th:if="${playlist.user_id.getId()} == ${#httpServletRequest.userPrincipal.Principal.getId()}"
-                                    th:text="${playlist.name}"
-                                   type="submit"
-                                ></button>
-                                <input type="hidden" name="playListGoal"  th:value="${playlist.id}">
-                            </form>
+                        <div th:each="audio :${dataAudioPlayList.content}">
+                            <div class="plus-number gumm-audio-player" data-play-pause-button-mode="toggle" th:data-src="${audio.music}" style="width: 100%;">
+                                <div class="details" style="width: 200%;">
+                                    <h4 th:text="${audio.name}"></h4>
+                                    <div class="track-progress-bar">
+                                        <a href="#" class="track-progress">
+                                            <span style="width:0px;"></span>
+                                        </a>
+                                    </div>
+                                </div>
+                                <a class="button button-play" href="#">
+                                    <span><i class="icon-play"></i></span>
+                                    <span><i class="icon-play"></i></span>
+                                </a>
+                            </div>
                         </div>
+
                     </div>
 
                     <ul class="bluebox-pagination" style="margin-top:40px;">
                         <li>
-                            <a th:href="@{/playlist(pagePlayList=0)}" th:text="First" class="nav-link"></a>
+                            <a th:href="@{/playlistAudio(pagePlayListAudio=0,playListGoal=''+${playListGoal})}" th:text="First" class="nav-link"></a>
                         </li>
-                        <li class="nav-item" th:each="i : ${#numbers.sequence(0,playList.totalPages-1)}" th:if="${playList.totalPages-1}!=-1">
-                            <a th:href="@{/playlist(pagePlayList=${i})}" th:text="${i}" class="nav-link"
-                               th:classappend="${currentPagePlayList}==${i}?'active':''"></a>
+                        <li class="nav-item" th:each="i : ${#numbers.sequence(0,dataAudioPlayList.totalPages-1)}" th:if="${dataAudioPlayList.totalPages-1}!=-1">
+                            <a th:href="@{/playlistAudio(pagePlayListAudio=${i},playListGoal=''+${playListGoal})}" th:text="${i}" class="nav-link"
+                               th:classappend="${currentPagePlayListAudio}==${i}?'active':''"></a>
                         </li>
                         <li>
-                            <a th:href="@{/playlist(pagePlayList=${playList.totalPages-1})}" th:text="Last" class="nav-link"></a>
+                            <a th:href="@{/playlistAudio(pagePlayListAudio=${dataAudioPlayList.totalPages-1},playListGoal=''+${playListGoal})}" th:text="Last" class="nav-link"></a>
                         </li>
                     </ul>
                     <span class="clear"></span>
@@ -260,7 +267,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalRegLabel">Registration</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import java.util.Optional;
 
 public interface ServiceAudio {
+
     Audio save(Audio audio);
 
     void deleteById(int id);
@@ -13,4 +14,7 @@ public interface ServiceAudio {
     Optional<Audio> findById(int id);
 
     Page<Audio> findAll(int pageAudio, String name);
+
+    Page<Audio> findAllByPlayAudio(int playlistGoal, int pagePlayListAudio, String playlistName);
+
 }
