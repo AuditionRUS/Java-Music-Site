@@ -86,7 +86,10 @@ $(document).ready(function(){
 
     });
 
-    $('.table .delBtn').on('click', function (event) {
+
+    //Delete Playlist
+
+    $('.table .delPlayListBtn').on('click', function (event) {
         event.preventDefault();
         var href=$(this).attr('href');
         $('#modalDeleteReg #delRef').attr('href', href);

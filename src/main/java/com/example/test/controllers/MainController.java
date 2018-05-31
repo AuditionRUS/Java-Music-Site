@@ -19,6 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
+import java.util.Iterator;
+import java.util.Set;
 
 @Controller
 public class MainController {
@@ -57,11 +59,12 @@ public class MainController {
         model.addAttribute("currentPageAudio", pageAudio);
         model.addAttribute("dataAudioType", audioTypeService.findAll(pageAudioType));
         model.addAttribute("currentPageAudioType", pageAudioType);
-        int plList;
+        int plList;Set<Role> roles=null;
         if (req.getUserPrincipal()==null){
              plList = -1;
         }else{
             plList = userRep.findAllByUsername(req.getUserPrincipal().getName()).getId();
+            //model.addAttribute("AllRoles", userRepository.findById(plList));
         }
         model.addAttribute("playList", playListServiceMain.findAll(plList, pagePlayList, playlistName));
         model.addAttribute("currentPagePlayList", pagePlayList);
@@ -117,6 +120,13 @@ public class MainController {
         model.addAttribute("currentPageAudioType", pageAudioType);
         model.addAttribute("playListGoal",playListGoal);
         return "playlistAudio";
+    }
+
+    @PreAuthorize("hasAnyRole('ADMIN','USER')")
+    @GetMapping("/deletePlaylist")
+    public String deletePlaylist(int id){
+        playListServiceMain.deleteById(id);
+        return "redirect:/";
     }
 
 }

@@ -86,15 +86,16 @@
 
                         <br>
 
-                        <div th:each="playlist :${playList.content}" style="text-align: center; margin-left: -10px;">
-                            <form method="get" th:action="@{/playlistAudio}">
-                                <button class="btn btn-primary" style="width: 200%;"
+                        <div th:each="playlist :${playList.content}" style="text-align: center; margin-left: -10px; float:left; display:inline-block">
+                            <form method="get" th:action="@{/playlistAudio}" style="display:inline-block">
+                                <button class="btn btn-primary" style="width: 150px;display:inline-block"
                                      th:if="${playlist.user_id.getId()} == ${#httpServletRequest.userPrincipal.Principal.getId()}"
                                     th:text="${playlist.name}"
                                    type="submit"
                                 ></button>
-                                <input type="hidden" name="playListGoal"  th:value="${playlist.id}">
+                                <input type="hidden" name="playListGoal"  th:value="${playlist.id}" style="display: inline-block">
                             </form>
+                            <a th:href="@{deletePlaylist/(id=${playlist.id})}" class="btn btn-danger delPlayListBtn" style="display: inline-block; float:right; margin-left: 10px">Delete</a>
                         </div>
                     </div>
 
@@ -183,20 +184,12 @@
 
             <div class="col-md-4">
                 <div class="bluebox-heading">
-                    <h3>Полезное</h3>
+                    <h3>Автор</h3>
                 </div>
                 <ul class="news-list">
                     <li>
-                        <h4><a href="#">Новый шаблон доступент для скачивания</a></h4>
-                        <span>31 августа 2015 | Джон Доу</span>
-                    </li>
-                    <li>
-                        <h4><a href="#">Адаптивный дизайн</a></h4>
-                        <span>31 августа 2015 | Джон Доу</span>
-                    </li>
-                    <li>
-                        <h4><a href="#">Проектирование шаблона</a></h4>
-                        <span>31 августа 2015 | Джон Доу</span>
+                        <h4><a href="#">Разработчиком сайта является</a></h4>
+                        <span>Чекулаев Антон</span>
                     </li>
                 </ul>
                 <span class="clear"></span>
@@ -285,7 +278,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" name="submitGood" class="btn btn-primary" value="save" />
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
                     </div>
                 </div>
             </div>
@@ -321,7 +314,7 @@
                             <input type="hidden" class="form-control" id="author" name="author" th:value="${#httpServletRequest.remoteUser}" />
                         </div>
                         <div class="form-group">
-                            <select size="1" name="audioType" id="type_id">
+                            <select size="1" class="form-control" name="audioType" id="type_id">
                                 <div th:each="audioType :${dataAudioType.content}">
                                     <option th:text="${audioType.type}" th:value="${audioType.id}"></option>
                                 </div>
@@ -337,7 +330,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" name="submitGood" class="btn btn-primary" value="save" />
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
                     </div>
                 </div>
             </div>
@@ -367,11 +360,10 @@
                         </div>
                         <div class="form-group">
                             <label for="namePlayList" class="form-control-label">Name</label>
-                            <input type="text" class="form-control" id="namePlayList" name="name" value="" required/>
+                            <input type="text" class="form-control" id="namePlayList" name="name" value="" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,15}$"/>
                         </div>
                         <div class="form-group">
-                            <label for="datePlayList" class="form-control-label">Date</label>
-                            <input type="text" class="form-control" id="datePlayList" name="dateAdd"/>
+                            <input type="hidden" class="form-control" id="datePlayList" name="dateAdd"/>
                         </div>
                         <div class="form-group">
                             <input type="hidden" class="form-control" id="userPlayList" name="user_id" th:value="${#httpServletRequest.userPrincipal.Principal.getId()}" required/>
@@ -379,7 +371,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <input type="submit" name="submitPlayList" class="btn btn-primary" value="save" />
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
                     </div>
                 </div>
             </div>
@@ -388,6 +380,31 @@
     </form>
 
 </div>
+
+<!-- Delete playlist -->
+
+<div class="modal fade" id="modalDeletePlaylist" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlaylistLongTitle" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalPlaylistLongTitle">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p class="alert alert-danger">
+                    Вы уверены, что хотите удалить этот плейлист?
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <a href="" class="btn btn-danger" id="delPlayListBtn">Delete</a>
+            </div>
+        </div>
+    </div>
+</div>
+
 
 </body>
 
