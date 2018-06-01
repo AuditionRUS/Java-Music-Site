@@ -92,8 +92,24 @@ $(document).ready(function(){
     $('.table .delPlayListBtn').on('click', function (event) {
         event.preventDefault();
         var href=$(this).attr('href');
-        $('#modalDeleteReg #delRef').attr('href', href);
+        $('#modalDeleteReg #delPlayListBtn').attr('href', href);
         $('#modalDeleteReg').modal();
+    });
+
+    //Delete Audio
+    $('.table .delAudioBtn').on('click', function (event) {
+        event.preventDefault();
+        var href=$(this).attr('href');
+        $('#modalDeleteAudio #delRef').attr('href', href);
+        $('#modalDeleteAudio').modal();
+    });
+
+    //Delete User
+    $('.table .delUserBtn').on('click', function (event) {
+        event.preventDefault();
+        var href=$(this).attr('href');
+        $('#modalDeleteUser #delUserBtn').attr('href', href);
+        $('#modalDeleteUser').modal();
     });
 
 

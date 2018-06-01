@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Музыкальный сайт</title>
+    <title>Web application</title>
 
     <!-- Bootstrap core CSS -->
     <link th:href="@{bootstrap-3.0.0/dist/css/bootstrap.css}" rel="stylesheet">
@@ -22,8 +22,7 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-    <script th:src="@{bootstrap-3.0.0/assets/js/html5shiv.js}"></script>
-    <script th:src="@{bootstrap-3.0.0/assets/js/respond.min.js}"></script>
+    <script type="text/javascript" src="webjars/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script type="text/javascript" src="webjars/jquery/3.1.0/jquery.min.js"></script>
     <![endif]-->
 </head>
@@ -32,10 +31,11 @@
 
 <!-- BEGIN banner area -->
 
+<!--
 <div class="top-banner-area">
     <a href="#"><img src="images/logo.png" alt="Logo"></a>
-
 </div>
+-->
 
 <!-- END banner area -->
 
@@ -75,36 +75,45 @@
 
                         <form method="get" style="">
                             <input type="submit" value="Поиск" name="search" style="height: 40px;">
-                            <input type="text" name="playlistName" style="width:70%;display: inline-block">
+                            <input type="text" name="musicName" style="width:70%;display: inline-block">
                         </form>
-
-                        <button class="btnPlayList btn-primary btn-block" type="submit" style="margin-top: 20px;">Добавить плейлист</button>
 
                         <br>
 
-                        <div th:each="playlist :${playList.content}" style="text-align: center; margin-left: -10px; float:left; display:inline-block">
-                            <form method="get" th:action="@{/playlistAudio}" style="display:inline-block">
-                                <button class="btn btn-primary" style="width: 150px;display:inline-block"
-                                     th:if="${playlist.user_id.getId()} == ${#httpServletRequest.userPrincipal.Principal.getId()}"
-                                    th:text="${playlist.name}"
-                                   type="submit"
-                                ></button>
-                                <input type="hidden" name="playListGoal"  th:value="${playlist.id}" style="display: inline-block">
-                            </form>
-                            <a th:href="@{deletePlaylist/(id=${playlist.id})}" class="btn btn-danger delPlayListBtn" style="display: inline-block; float:right; margin-left: 10px">Delete</a>
-                        </div>
+                        <table class="table table-hover">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th><button class="btn btn-success nBtn">New</button></th>
+                            </tr>
+
+                            </thead>
+                            <tbody>
+                                <tr th:each="user :${dataUser.content}">
+                                    <td th:text="${user.username}"></td>
+                                    <!--<td><audio controls src="audio/calvin-harris-feat-dua-lipa-one-kiss.mp3"></audio></td>-->
+                                    <td th:text="${user.getRoles().iterator().next().getRole()}"></td>
+                                    <td>
+                                        <a th:href="@{admin/deleteUser/(id=${user.id})}" class="btn btn-danger delUserBtn">Удалить</a>
+                                        <button th:value="${user.id}">${user.id}</button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
 
                     <ul class="bluebox-pagination" style="margin-top:40px;">
                         <li>
-                            <a th:href="@{/playlist(pagePlayList=0)}" th:text="First" class="nav-link"></a>
+                            <a th:href="@{/admin(pageUser=0)}" th:text="First" class="nav-link"></a>
                         </li>
-                        <li class="nav-item" th:each="i : ${#numbers.sequence(0,playList.totalPages-1)}" th:if="${playList.totalPages-1}!=-1">
-                            <a th:href="@{/playlist(pagePlayList=${i})}" th:text="${i}" class="nav-link"
-                               th:classappend="${currentPagePlayList}==${i}?'active':''"></a>
+                        <li class="nav-item" th:each="i : ${#numbers.sequence(0,dataUser.totalPages-1)}" th:if="${dataUser.totalPages-1}!=-1">
+                            <a th:href="@{/admin(pageUser=${i})}" th:text="${i}" class="nav-link"
+                               th:classappend="${currentPageUser}==${i}?'active':''"></a>
                         </li>
                         <li>
-                            <a th:href="@{/playlist(pagePlayList=${playList.totalPages-1})}" th:text="Last" class="nav-link"></a>
+                            <a th:href="@{/admin(pageUser=${dataUser.totalPages-1})}" th:text="Last" class="nav-link"></a>
                         </li>
                     </ul>
                     <span class="clear"></span>
@@ -136,7 +145,8 @@
                             <div class="details" th:if="${#httpServletRequest.remoteUser} != null">
                                 <h3>Привет, [[${#httpServletRequest.remoteUser}]]</h3>
                                 <button class="nAudioBtn btn btn-primary btn-block" type="submit">Добавить песню</button>
-                                <a class="btn btn-primary btn-block" href="/playlist">Мой Плейлист</a>
+                                <a class="btn btn-primary btn-block" href="/playlist">Мои Плейлисты</a>
+                                <a class="btn btn-primary btn-block" th:if="${#httpServletRequest.userPrincipal.Principal.getRoles().iterator().next().getRole()}=='ADMIN'" href="/admin">Администрирование</a>
                             </div>
                             <div class="details" th:if="${#httpServletRequest.remoteUser} == null">
                                 <form method="post" class="form-signin" action="/">
@@ -242,14 +252,14 @@
 <!-- Форма добавления user-->
 
 <div class="formRegistration">
-    <form th:action="@{/reg}" method="post">
+    <form th:action="@{/saveUser}" method="post">
 
         <div class="modal fade" id="exampleModalReg" tabindex="-1" role="dialog" aria-labelledby="exampleModalRegLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalRegLabel">Registration</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
@@ -273,8 +283,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Сохранить</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
                     </div>
                 </div>
             </div>
@@ -293,7 +303,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalAudioLabel">Создание</h5>
+                        <h5 class="modal-title" id="exampleModalAudioLabel">Update or Create</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -337,71 +347,28 @@
 
 </div>
 
-<!-- Форма добавления playlist -->
+<!-- Форма удаления пользователя -->
 
-<div class="formSavePlayList">
-    <form th:action="@{/playlistSave}" method="post">
-
-        <div class="modal fade" id="exampleModalPlayList" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlayListLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalPlayListLabel">Создание</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="idPlayList" name="idAudio" value=""/>
-                        </div>
-                        <div class="form-group">
-                            <label for="namePlayList" class="form-control-label">Название</label>
-                            <input type="text" class="form-control" id="namePlayList" name="name" value="" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,15}$"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="datePlayList" name="dateAdd"/>
-                        </div>
-                        <div class="form-group">
-                            <input type="hidden" class="form-control" id="userPlayList" name="user_id" th:value="${#httpServletRequest.userPrincipal.Principal.getId()}" required/>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Сохранить</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </form>
-
-</div>
-
-<!-- Delete playlist -->
-
-<div class="modal fade" id="modalDeletePlaylist" tabindex="-1" role="dialog" aria-labelledby="exampleModalPlaylistLongTitle" aria-hidden="true">
+<div class="modal fade" id="modalDeleteUser" tabindex="-1" role="dialog" aria-labelledby="exampleModalUserLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalPlaylistLongTitle">Удаление</h5>
+                <h5 class="modal-title" id="exampleModalUserLongTitle">Удаление</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
             <div class="modal-body">
                 <p class="alert alert-danger">
-                    Вы уверены, что хотите удалить этот плейлист?
+                    Вы уверены, что хотите удалить этого пользователя?
                 </p>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
-                <a href="" class="btn btn-danger" id="delPlayListBtn">Удалить</a>
             </div>
         </div>
     </div>
 </div>
-
 
 </body>
 

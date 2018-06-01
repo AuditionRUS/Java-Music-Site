@@ -45,10 +45,7 @@
             <nav style="width: 100%;">
                 <ul>
                     <li style="margin-left:20px;" class="current-item">
-                        <a href="index.html">Главная</a>
-                    </li>
-                    <li>
-                        <a href="contact.html">Контакты</a>
+                        <a th:href="@{/}">Главная</a>
                     </li>
                 </ul>
             </nav>
@@ -58,7 +55,6 @@
 
         <select class="bb-mobile-nav">
             <option>Главная</option>
-            <option>Контакты</option>
         </select>
 
         <!-- END mobile nav -->
@@ -258,7 +254,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalRegLabel">Registration</h5>
+                        <h5 class="modal-title" id="exampleModalRegLabel">Регистрация</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -283,8 +279,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -303,7 +299,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalAudioLabel">Update or Create</h5>
+                        <h5 class="modal-title" id="exampleModalAudioLabel">Создание</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -313,13 +309,14 @@
                             <input type="hidden" class="form-control" id="idAudio" name="idAudio" value=""/>
                         </div>
                         <div class="form-group">
-                            <label for="name" class="form-control-label">Name</label>
+                            <label for="name" class="form-control-label">Название</label>
                             <input type="text" class="form-control" id="name" name="name" value="" required/>
                         </div>
                         <div class="form-group">
                             <input type="hidden" class="form-control" id="author" name="author" th:value="${#httpServletRequest.remoteUser}" />
                         </div>
                         <div class="form-group">
+                            <label for="type_id" class="form-control-label">Направление</label>
                             <select size="1" class="form-control" name="audioType" id="type_id">
                                 <div th:each="audioType :${dataAudioType.content}">
                                     <option th:text="${audioType.type}" th:value="${audioType.id}"></option>
@@ -330,13 +327,13 @@
                             <input type="hidden" class="form-control" id="dateAdd" name="dateAdd" value="" />
                         </div>
                         <div>
-                            <label for="musicFile" class="form-control-label">Type</label>
+                            <label for="musicFile" class="form-control-label">Аудиофайл</label>
                             <input type="file" class="form-control" id="musicFile" name="musicFile" accept="audio/*" required/>
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Сохранить</button>
                     </div>
                 </div>
             </div>
@@ -355,7 +352,7 @@
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="exampleModalPlayListLabel">Update or Create</h5>
+                        <h5 class="modal-title" id="exampleModalPlayListLabel">Создание</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close" style="margin-top: -20px">
                             <span aria-hidden="true">&times;</span>
                         </button>
@@ -365,7 +362,7 @@
                             <input type="hidden" class="form-control" id="idPlayList" name="idAudio" value=""/>
                         </div>
                         <div class="form-group">
-                            <label for="namePlayList" class="form-control-label">Name</label>
+                            <label for="namePlayList" class="form-control-label">Название</label>
                             <input type="text" class="form-control" id="namePlayList" name="name" value="" required pattern="^[a-zA-Z][a-zA-Z0-9-_\.]{4,15}$"/>
                         </div>
                         <div class="form-group">
@@ -376,8 +373,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Save</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Закрыть</button>
+                        <button type="submit" name="submitPlayList" class="btn btn-primary" value="save">Сохранить</button>
                     </div>
                 </div>
             </div>

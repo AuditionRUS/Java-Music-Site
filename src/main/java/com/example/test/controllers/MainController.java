@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 @Controller
@@ -27,9 +28,6 @@ public class MainController {
 
     @Autowired
     private ServiceAudio audioService;
-
-    @Autowired
-    private ServiceMain<Video> videoService;
 
     @Autowired
     private ServiceMain<AudioType> audioTypeService;
@@ -126,7 +124,7 @@ public class MainController {
     @GetMapping("/deletePlaylist")
     public String deletePlaylist(int id){
         playListServiceMain.deleteById(id);
-        return "redirect:/";
+        return "redirect:/playlist";
     }
 
 }

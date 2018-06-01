@@ -1,17 +1,19 @@
 package com.example.test.entities;
 
 import javax.persistence.*;
+import java.util.List;
 import java.util.Set;
 
 @Entity
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private int id;
     private String username;
     private String password;
 
-    @OneToMany(fetch = FetchType.EAGER)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(name="user_role", joinColumns=@JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name="role_id"))
     private Set<Role> roles;
@@ -62,5 +64,11 @@ public class User {
         this.roles = roles;
     }
 
+    public Set<PlayList> getPlayList() {
+        return playList;
+    }
 
+    public void setPlayList(Set<PlayList> playList) {
+        this.playList = playList;
+    }
 }
